@@ -1,42 +1,18 @@
 import React, { Component } from 'react';
-import axios from 'axios';
 
 class Filter extends Component{
     constructor(props) {
         super(props);
         this.state = {
             data: [],
-            isLoading: true,
-            error: null
+            isLoading: false,
+            error: null,
+            searchText: ''
         };
     }
 
-    componentDidMount() {
-        axios.get(`http://github.com/public-apis/public-apis`)
-            .then(res => {
-                console.log(res);
-                // Transform the raw data by extracting the nested posts
-                const data = res.data.data.children.map(obj => obj.data);
-
-                // Update state to trigger a re-render.
-                // Clear any errors, and turn off the loading indiciator.
-                this.setState({
-                    data,
-                    loading: false,
-                    error: null
-                });
-            })
-            .catch(err => {
-                // Something went wrong. Save the error in state and re-render.
-                this.setState({
-                    loading: false,
-                    error: err
-                });
-            });
-    }
-
     renderLoading() {
-        return <div>Loading...</div>;
+        return <p>Loading...</p>;
     }
 
     renderError() {
@@ -51,23 +27,51 @@ class Filter extends Component{
         if(this.state.error) {
             return this.renderError();
         }
+        let preData = this.state.data.entries, postData = [];
+        for(var elem in preData){
+            postData.push([preData[elem].Description, elem, preData[elem].API]);
+        }
+        postData.sort();
 
-        return (
-            <ul>
-                {this.state.data.map(post =>
-                    <li key={post.id}>{post.title}</li>
-                )}
-            </ul>
-        );
+        if(this.state.searchText.length > 0) {
+            if(postData.length > 0) {
+                return (
+                    <ul>
+                        {postData.map(post =>
+                            <li key={post[1]}><p align="left">{post[0] + " (from: " + post[2] + " API)"}</p></li>
+                        )}
+                    </ul>
+                );
+            }else{
+                return (
+                    <p>No results found!</p>
+                );
+            }
+        }else{
+            return (
+                <p>Try searching for anything!</p>
+            );
+        }
     }
+
+    async onChangeText(event) {
+        if(this.state.searchText !== event.target.value){
+            this.setState({searchText: event.target.value, isLoading: true});
+            const url = 'https://api.publicapis.org/entries?title=' + this.state.searchText;
+            const res = await fetch(url);
+            const data = await res.json();
+            this.setState({data: data, isLoading: false});
+        }
+    };
 
     render() {
         return (
             <div>
-                {/*<h1>{`/r/${this.props.subreddit}`}</h1>*/}
-                {this.state.isLoading ?
+                <input type='text' name='title' value={this.state.searchText} onChange={this.onChangeText.bind(this)}/>
+                {this.state.isLoading?
                     this.renderLoading()
-                    : this.renderPosts()}
+                    :
+                    this.renderPosts()}
             </div>
         );
     }
