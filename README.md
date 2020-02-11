@@ -1,3 +1,8 @@
+Northwestern Mutual Code Challenge 2/11/2020 by Jon Erbe
+
+Program pulls data from https://api.publicapis.org/
+
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts

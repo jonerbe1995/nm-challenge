@@ -67,7 +67,7 @@ class Filter extends Component{
     render() {
         return (
             <div>
-                <input type='text' name='title' value={this.state.searchText} onChange={this.onChangeText.bind(this)}/>
+                <input type='text' name='searchBar' value={this.state.searchText} onChange={this.onChangeText.bind(this)}/>
                 {this.state.isLoading?
                     this.renderLoading()
                     :
