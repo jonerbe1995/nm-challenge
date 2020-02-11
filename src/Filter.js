@@ -36,11 +36,12 @@ class Filter extends Component{
         if(this.state.searchText.length > 0) {
             if(postData.length > 0) {
                 return (
-                    <ul>
+                    <section>
+                        <h2>Results</h2>
                         {postData.map(post =>
-                            <li key={post[1]}><p align="left">{post[0] + " (from: " + post[2] + " API)"}</p></li>
+                            <div className="listItem" key={post[1]}><p align="left">{post[0] + " (from: " + post[2] + " API)"}</p></div>
                         )}
-                    </ul>
+                    </section>
                 );
             }else{
                 return (
@@ -49,7 +50,7 @@ class Filter extends Component{
             }
         }else{
             return (
-                <p>Try searching for anything!</p>
+                <p>Try searching for anything! (<b>matches via substring - i.e. "at" would return "cat" and "atlas"</b>)</p>
             );
         }
     }
@@ -57,7 +58,7 @@ class Filter extends Component{
     async onChangeText(event) {
         if(this.state.searchText !== event.target.value){
             this.setState({searchText: event.target.value, isLoading: true});
-            const url = 'https://api.publicapis.org/entries?title=' + this.state.searchText;
+            const url = 'https://api.publicapis.org/entries?description=' + this.state.searchText;
             const res = await fetch(url);
             const data = await res.json();
             this.setState({data: data, isLoading: false});
@@ -67,7 +68,7 @@ class Filter extends Component{
     render() {
         return (
             <div>
-                <input type='text' name='searchBar' value={this.state.searchText} onChange={this.onChangeText.bind(this)}/>
+                <input className="searchBar" type='text' name='searchBar' value={this.state.searchText} onChange={this.onChangeText.bind(this)}/>
                 {this.state.isLoading?
                     this.renderLoading()
                     :

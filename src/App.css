@@ -13,26 +13,39 @@
   }
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+.searchBar {
+  font-family: Ubuntu, serif;
+  border: 5px solid white;
+  border-radius: 10px;
+  -webkit-box-shadow:
+          inset 0 0 8px  rgba(0,0,0,0.1),
+          0 0 16px rgba(0,0,0,0.1);
+  -moz-box-shadow:
+          inset 0 0 8px  rgba(0,0,0,0.1),
+          0 0 16px rgba(0,0,0,0.1);
+  box-shadow:
+          inset 0 0 8px  rgba(0,0,0,0.1),
+          0 0 16px rgba(0,0,0,0.1);
+  padding: 15px;
+  background: rgba(255,255,255,0.5);
+  margin: 30px 0 10px 0;
 }
 
-.App-link {
-  color: #61dafb;
+.listItem {
+  border-radius: 10px;
+  background-color: lightgray;
+  margin: 10px;
+  padding: 1px;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+p{
+  font-family: Ubuntu, serif;
+  margin-left: 10px;
+}
+
+html{
+  height: 100%;
+  width: 100%;
+  overflow: scroll;
+  background: whitesmoke;
 }
