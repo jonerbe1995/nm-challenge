@@ -28,6 +28,7 @@ class Filter extends Component{
             return this.renderError();
         }
         let preData = this.state.data.entries, postData = [];
+        console.log(preData);
         for(var elem in preData){
             postData.push([preData[elem].Description, elem, preData[elem].API]);
         }
@@ -58,7 +59,7 @@ class Filter extends Component{
     async onChangeText(event) {
         if(this.state.searchText !== event.target.value){
             this.setState({searchText: event.target.value, isLoading: true});
-            const url = 'https://api.publicapis.org/entries?description=' + this.state.searchText;
+            const url = 'https://api.publicapis.org/entries?title=' + this.state.searchText;
             const res = await fetch(url);
             const data = await res.json();
             this.setState({data: data, isLoading: false});
